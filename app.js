@@ -1,8 +1,10 @@
-const express = require("express")
-const ejs = require('ejs');
+const express = require("express");
+const { use } = require("express/lib/application");
+const pageRoute = require('./routes/pageRoute');
+
+
 
 const app = express()
-
 
 //Template Engine(Şablon Motoru :) )
 app.set("view engine", "ejs")
@@ -13,24 +15,7 @@ app.use(express.static("public"))
 
 
 //Routes(Yönlendirmeler)
-app.get("/", (req, res) => {
-  res.status(200)
-  .render("index",{
-      page_name:"index"
-  })
-})
-app.get("/about", (req, res) => {
-  res.status(200)
-  .render("about",{
-      page_name:"about"
-  })
-})
-app.get("/contact", (req, res) => {
-  res.status(200)
-  .render("contact")
-})
-
-
+app.use("/",pageRoute)
 
 
 //Server Başlatılıyor..
@@ -38,3 +23,9 @@ const port = 5200
 app.listen(port, () => {
   console.log(`Server ${port} portunda çalışmaya başladı.`)
 })
+
+app.get('/random', function (req, res) {
+    res.send('TEST')
+  }) 
+  ```
+  yönlendirmesi hangi istek ile eşleşir?
