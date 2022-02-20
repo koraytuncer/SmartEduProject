@@ -1,18 +1,28 @@
-const Category = require("../models/Category")
+const Category = require('../models/Category');
 
 exports.createCategory = async (req, res) => {
   try {
-    const category = await Category.create(req.body)
+    const category = await Category.create(req.body);
 
-    res.status(201).json({
-      status: "İşlem başarılı",
-      category,
-    })
-    res.send("Yeni kategori oluşturuldu")
+    res.status(201).redirect('/users/dashboard');
   } catch (error) {
     res.status(400).json({
-      status: "İşlemde hata var",
+      status: 'fail',
       error,
-    })
+    });
   }
-}
+};
+
+exports.deleteCategory = async (req, res) => {
+  try {    
+
+    await Category.findByIdAndRemove(req.params.id)
+    res.status(200).redirect('/users/dashboard');
+
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      error,
+    });
+  }
+};
